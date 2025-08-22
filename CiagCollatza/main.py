@@ -21,3 +21,15 @@ while 1:
         print("ok")
         break
 #koniec kontroli bledow
+wyrazCiagu=[]
+i=0
+wyrazCiagu.append(liczbaStartowa)
+while wyrazCiagu[i] !=1.0:
+    parzysta = wyrazCiagu[i]%2
+    if parzysta == 0:
+        wyrazCiagu.append(wyrazCiagu[i]/2)
+    else:
+        wyrazCiagu.append(3*wyrazCiagu[i]+1)
+    print(wyrazCiagu[i])
+    i=i+1
+print(wyrazCiagu[i])
