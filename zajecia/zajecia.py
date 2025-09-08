@@ -16,3 +16,4 @@ list=[1,2,3,4,5,6,6,6,("Ania")]
 #set nie ma duplikatów
 #lista jest najwolniejsza
 #roznica nawiasow
+#ctrl+alt+v przypisywanie do zmiennej

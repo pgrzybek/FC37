@@ -1,5 +1,6 @@
-wartoscKonta=0
+wartoscKonta=1000
 skladMagazynu={}
+operacje={}
 def sprawdz_czy_to_liczba(wartosc):
     while 1:
         try:
@@ -16,8 +17,17 @@ class Przedmioty:
         self.nazwa=nazwa
         self.cena=cena
         self.ilosc=ilosc
+    def wypisz(self):
+        print(self.nazwa,self.cena,self.ilosc)
+class Operacje:
+    def __init__(self,operacja,przedmiot):
+        self.operacja = operacja
+        self.przedmiot=przedmiot
+    def wypisz(self):
+        print(self.operacja,self.przedmiot.nazwa,self.przedmiot.cena,self.przedmiot.ilosc)
 
-def dodaj_do_magazynu(slownik, wartosc):
+
+def operacje_wykonane(slownik, wartosc):
     if slownik:  # jeśli słownik nie jest pusty
         nowy_klucz = max(slownik.keys()) + 1
     else:  # jeśli pusty, zaczynamy od 0
@@ -42,9 +52,28 @@ def saldo(kwota_pieniedzy):
     else:
         print("Zla komenda")
     return kwota_pieniedzy
-def sprzedarz():
+def sprzedarz(zkonto,zmagazyn):
     print("Sprzedarz")
+    nazwa = input("Podaj nazwe  produktu: ")
+    if  nazwa in zmagazyn:
+        print(f"W magazynie jest {zmagazyn[nazwa].ilosc} sztuk ile chcesz sprzedac")
+        ilosc = input("Podaj ilosc  produktu: ")
+        ilosc=sprawdz_czy_to_liczba(ilosc)
+        if ilosc<zmagazyn[nazwa].ilosc:
+            zmagazyn[nazwa].ilosc =zmagazyn[nazwa].ilosc-ilosc
+            zkonto = zkonto+zmagazyn[nazwa].ilosc*zmagazyn[nazwa].cena
+            sprzedany_przedmiot=Operacje("sprzedarz",zmagazyn[nazwa])
+            operacje_wykonane(operacje, sprzedany_przedmiot)
+        elif ilosc==zmagazyn[nazwa].ilosc:
+            zkonto = zkonto + zmagazyn[nazwa].ilosc * zmagazyn[nazwa].cena
+            sprzedany_przedmiot = Operacje("sprzedarz", zmagazyn[nazwa])
+            operacje_wykonane(operacje, sprzedany_przedmiot)
+            del zmagazyn[nazwa]
+        else:
+            print("Niewlasciwa ilosc")
+
     input("Nacisnij dowolny klawisz")
+    return zkonto,zmagazyn
 def zakup(zkonto, zmagazyn):
     print("Zakup")
     nazwa=input("Podaj nazwe zakupionego produktu: ")
@@ -55,9 +84,14 @@ def zakup(zkonto, zmagazyn):
     koszt =int(cena)*int(ilosc)
     zakupiono = zkonto - koszt
     if zakupiono > 0:
-        produkt=Przedmioty(nazwa,cena,ilosc)
-        zmagazyn=(skladMagazynu, produkt)
+        produkt = Przedmioty(nazwa, cena, ilosc)
+        if not nazwa in zmagazyn:
+            zmagazyn[nazwa]=produkt
+        else:
+            zmagazyn[nazwa].ilosc=zmagazyn[nazwa].ilosc+ilosc
         zkonto=zakupiono
+        zakupiony_przedmiot = Operacje("zakup", produkt)
+        operacje_wykonane(operacje, zakupiony_przedmiot)
     else:
         print(f"Za malo pieniedzy na koncie brakuje {abs(zakupiono)} ")
 
@@ -65,15 +99,41 @@ def zakup(zkonto, zmagazyn):
     return zkonto,zmagazyn
 def konto():
     print("Konto")
+    print(wartoscKonta)
     input("Nacisnij dowolny klawisz")
 def lista():
     print("Lista")
+    print("nazwa", "ilosc", "cena")
+    for jednostka in skladMagazynu:
+        #print(skladMagazynu[jednostka].nazwa,skladMagazynu[jednostka].ilosc,skladMagazynu[jednostka].cena)
+        skladMagazynu[jednostka].wypisz()
     input("Nacisnij dowolny klawisz")
 def magazyn():
     print("Magazyn")
+    przedmiot=input("Podaj nazwe przedmiotu do znalezienia")
+    if przedmiot in skladMagazynu:
+        skladMagazynu[przedmiot].wypisz()
+    else:
+        print("Brak przedmiotu")
     input("Nacisnij dowolny klawisz")
 def przeglad():
     print("Przeglad")
+    zakres_start=input(f"Podaj zakres poczatek zakresu od 1")
+
+    zakres_koniec = input(f"Podaj koniec zakresu do {len(operacje)}")
+
+    if zakres_start=="" or zakres_koniec=="":
+        for i in range(len(operacje)):
+            operacje[i].wypisz()
+    else:
+        zakres_start = sprawdz_czy_to_liczba(zakres_start)
+        zakres_koniec = sprawdz_czy_to_liczba(zakres_koniec)
+        if zakres_start>1 and zakres_koniec<len(operacje):
+            for i in range(zakres_start,zakres_koniec):
+               operacje[i].wypisz()
+        else:
+            print("zly zakres")
+
     input("Nacisnij dowolny klawisz")
 
 while 1:
@@ -90,9 +150,9 @@ while 1:
     if opcjaGlowna == 1:
         wartoscKonta=saldo(wartoscKonta)
     if opcjaGlowna == 2:
-        sprzedarz()
+        wartoscKonta,skladMagazynu =sprzedarz(wartoscKonta,skladMagazynu)
     if opcjaGlowna == 3:
-        wartoscKonta,skladMagazynu=(wartoscKonta,skladMagazynu)
+        wartoscKonta,skladMagazynu=zakup(wartoscKonta,skladMagazynu)
     if opcjaGlowna == 4:
         konto()
     if opcjaGlowna == 5:
