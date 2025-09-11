@@ -21,7 +21,7 @@ class Nauczyciele(Szkolny):
             print("Nie znaleziono nauczyciela")
 
 
-    def dodaj(cls):
+    def dodaj(self):
         #print("Dodaj nauczyciela")
         imie_i_nazwisko = input("Podaj imie i nazwisko ze spacja w srodku \n")
         przedmiot = input("Podaj przedmiot \n")

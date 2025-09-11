@@ -26,24 +26,6 @@ def sprawdz_czy_to_liczba(wartosc):
     return wartosc
 
 
-def dodaj():
-    imie_i_nazwisko = input("Podaj imie i nazwisko ze spacja w srodku \n")
-    klasa = input("Podaj klase \n")
-    return imie_i_nazwisko, klasa
-
-
-def dodaj_ucznia():
-    print("Dodaj ucznia")
-    imie_i_nazwisko, klasa = dodaj()
-    Uczniowie.lista.append(Uczniowie(imie_i_nazwisko, klasa))
-
-
-def dodaj_wychowawce():
-    print("Dodaj wychowawce")
-    imie_i_nazwisko, klasa = dodaj()
-    Wychowawcy.lista.append(Wychowawcy(imie_i_nazwisko, klasa))
-
-
 def wyswietl_klasy():
     nazwa_klasy=input("Podaj nazwe klasy ")
     print(f"Uczniowie klasy {nazwa_klasy} to")
@@ -62,42 +44,6 @@ def wyswietl_klasy():
         print("Nie znaleziono wychowawcy")
 
 
-
-
-def wyswietl_wychowawce():
-    imie_wychowawcy=input("Podaj imie i nazwisko wychowawcy ze spacja w srodku \n")
-    print("Uczniowie tego wychowawcy to")
-    #znaleziony=wychowawcy.imie_i_nazwisko=imie_wychowawcy.rfind(imie_wychowawcy)
-    for wychowawca in Wychowawcy.lista:
-        if wychowawca.imie_i_nazwisko==imie_wychowawcy:
-            for i in range(len(Uczniowie.lista)):
-                if wychowawca.klasa == Uczniowie.lista[i].klasa:
-                    print(Uczniowie.lista[i].imie_i_nazwisko)
-            break
-        else:
-            print("Nie znaleziono wychowawcy")
-
-
-
-def wyswietl_uczniow():
-    imie_ucznia=input("Podaj imie i nazwisko ucznia ze spacja w srodku \n")
-    wybrany=""
-    for uczen in Uczniowie.lista:
-        if imie_ucznia == uczen.imie_i_nazwisko:
-            wybrany=uczen
-            break
-    print("Uczen ma te przedmioty i tych nauczycieli")
-    if wybrany != "":
-        klasa_ucznia=wybrany.klasa
-        for nauczyciel in Nauczyciele.lista:
-            for i in range(len(nauczyciel.klasa)):
-                if nauczyciel.klasa[i] == klasa_ucznia:
-                    print(nauczyciel.imie_i_nazwisko)
-                    print(nauczyciel.przedmiot)
-        else:
-            print("nie znaleziono ucznia")
-
-
 def utworz():
     while 1:
         print("1.Uczen")
@@ -109,7 +55,7 @@ def utworz():
         if opcja_utworz == 1:
             Uczniowie.dodaj()
         if opcja_utworz == 2:
-            Nauczyciele.dodaj_nauczyciela()
+            Nauczyciele.dodaj(Nauczyciele.lista)
         if opcja_utworz == 3:
             Wychowawcy.dodaj()
         if opcja_utworz == 4:
@@ -128,11 +74,11 @@ def zarzadzaj():
         opcja_zarzadzaj = input("Wybierz opcje używając numerow 1-8. 8 Konczy program \n")
         opcja_zarzadzaj = sprawdz_czy_to_liczba(opcja_zarzadzaj)
         if opcja_zarzadzaj == 1:
-            wyswietl_uczniow()
+            Uczniowie.wyswietl_uczniow()
         if opcja_zarzadzaj == 2:
             Nauczyciele.wyswietl_nauczycieli()
         if opcja_zarzadzaj == 3:
-            wyswietl_wychowawce()
+            Wychowawcy.wyswietl_wychowawce()
         if opcja_zarzadzaj == 4:
             wyswietl_klasy()
         if opcja_zarzadzaj == 5:
