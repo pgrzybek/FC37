@@ -3,13 +3,6 @@ from Uczniowie import Uczniowie
 from Wychowawcy import Wychowawcy
 
 
-def operacje_wykonane(slownik, wartosc):
-    if slownik:  # jeśli słownik nie jest pusty
-        nowy_klucz = max(slownik.keys()) + 1
-    else:  # jeśli pusty, zaczynamy od 0
-        nowy_klucz = 0
-    slownik[nowy_klucz] = wartosc
-    return slownik
 
 
 def sprawdz_czy_to_liczba(wartosc):
