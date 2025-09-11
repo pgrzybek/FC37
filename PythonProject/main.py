@@ -1,0 +1,2 @@
+zbior= ["jablko","banan","orzech"]
+
