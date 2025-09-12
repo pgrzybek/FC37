@@ -1,0 +1,11 @@
+.my-btn {
+    width: 200px;
+    height: 200px;
+    background-color: lightblue;
+    border: none;
+    border-radius: 8px;
+    font-size: 200px;cursor: pointer;
+    display: flex;
+    justify-content: center; /* poziomo */
+    align-items: center;
+}
