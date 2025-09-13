@@ -14,11 +14,13 @@ function makeTable(n){
             button.id=String(r * n + c+1);
             button.className="my-btn";
             board.push(button);
+            //console.log(board);
             td.appendChild(button);
             tr.appendChild(td);
         }
         table.appendChild(tr);
     }
+    computerMove(n);
     return board;
 }
 
@@ -26,9 +28,10 @@ function playerClick(event) {
     const buttonId = event.target.id;
     let button=document.getElementById(buttonId);
     button.value="O";
-    button.innerHTML="O";
+    button.innerHTML="o";
     button.disabled=true;
-    playerMoveMade(buttonId,moves);
+    let winningLines=victoryLines(n);
+    playerMoveMade(buttonId,moves,winningLines);
     return button.id;
 }
 
@@ -41,23 +44,83 @@ function resetClick() {
         moves.clear();
     }
     document.getElementById("result").innerHTML="";
+    computerMove(n);
 }
+
 function block_table(n){
-    for (let i = 1; i < 10; i++) {
+    for (let i = 1; i <(n*n)+1; i++) {
         let btn=document.getElementById(String(i));
         btn.disabled=true;
     }
 }
 
-function playerMoveMade(buttonId, moves){
+function playerMoveMade(buttonId, moves,winningLines){
     moves.set(buttonId,"o");
-    if(checkWinner(moves,victoryLines(n)) === "o"){
-        document.getElementById("result").innerHTML="wygrana";
-    }
-    if(checkWinner(moves,victoryLines(n)) === "x"){
 
-        document.getElementById("result").innerHTML="przegrana";
+    computerMove(n,winningLines);
+    //let winningLines=victoryLines(n);
+
+    if (moves.size>2){
+        if(checkWinner(moves,winningLines) === "o"){
+            document.getElementById("result").innerHTML="wygrana";
+            block_table(n);
+        }
+        if(checkWinner(moves,winningLines) === "x"){
+            document.getElementById("result").innerHTML="przegrana";
+            block_table(n);
+        }
     }
+}
+
+function getRandomFloat(min, max) {
+    return Math.floor(Math.random() * (max - min +1) + min);
+}
+
+function computerMove(n,winningLines){
+    let size=n*n;
+    let move;
+    if (moves.size===0){
+        move= String(getRandomFloat(1,size));
+    }
+    else {
+        for (const line of winningLines) {
+            const values = line.map(key => moves.get(key));
+            const unique = new Set(values);
+            if (unique.has(undefined) && unique.has("x")){
+                //let index=getRandomFloat(1,values.length);
+                for (let r = 0; r < values.length; r++) {
+                    if (values[r] === undefined)
+                        move=line[r];
+                }
+
+                break;
+            }
+        }
+    }
+    let btn=document.getElementById(String(move));
+    if(!btn.disabled) {
+        btn.disabled=true;
+        btn.innerHTML="x";
+        moves.set(move,"x");
+    }
+    //console.log(btn);
+    //console.log(move);
+
+}
+
+function checkFilled(move){
+    let btn=document.getElementById(move);
+
+    return !!btn.disabled;
+}
+
+function computerTurn(moves,winningLines,n){
+
+
+
+       //computerMove(n);
+
+    //console.log(checkFilled(move),move);
 }
 
 // const observer = new MutationObserver((mutations) => {
@@ -78,11 +141,4 @@ function playerMoveMade(buttonId, moves){
 window.onload = function() {
     makeTable(n);
     document.getElementById("reset").addEventListener("click", resetClick);
-    // for (let i = 1; i < 10; i++) {
-    //     let btn=document.getElementById(String(i));
-    //     btn.addEventListener("click", playerClick);
-    //     //observer.observe( btn, { attributes: true });
-    // }
-
-    //document.getElementById("1").addEventListener("click", handleClick);
 };

@@ -16,7 +16,7 @@ function victoryLines(n) {
     lines.push(Array.from({length: n}, (_, i) => String(i * (n + 1) + 1)));
 
     // przekątna odwrotna
-    lines.push(Array.from({length: n}, (_, i) => String((i + 1) * (n - 1))));
+    lines.push(Array.from({length: n}, (_, i) => String(n + i * (n - 1) )));
 
     return lines;
 }

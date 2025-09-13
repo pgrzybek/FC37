@@ -1,26 +1,14 @@
-function checkWinner2(moves,winningLines) {
-
-    for (const line of winningLines) {
-
-        const values = line.map(key => moves.get(key));
-        const unique = new Set(values);
-
-        if (unique.size === 1 && !unique.has(null)) {
-            return [...unique][0]; // "X" albo "O"
-        }
-    }
-    return null; // brak zwycięzcy
-}
 function checkWinner(moves,winningLines) {
 
     for (const line of winningLines) {
 
-        const values = line.map(key => moves.get(key));
-        const unique = new Set(values);
+        const values = line.map(key => moves.get(key));//makes table(n) of values
 
-        if (unique.size === 1 && !unique.has(null)) {
+        const unique = new Set(values);//non unique are removed
+
+        if (unique.size === 1 && !unique.has(undefined)) {
             return [...unique][0]; // "X" albo "O"
         }
     }
-    return null; // brak zwycięzcy
+    return undefined; // brak zwycięzcy
 }
