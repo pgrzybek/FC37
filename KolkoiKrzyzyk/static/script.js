@@ -1,6 +1,6 @@
 
 let moves = new Map();
-const n = 3; // rozmiar planszy
+let n = 3; // rozmiar planszy
 
 function makeTable(n){
     const table = document.getElementById("gameBoard");
@@ -108,21 +108,9 @@ function computerMove(n,winningLines){
 
 }
 
-function checkFilled(move){
-    let btn=document.getElementById(move);
-
-    return !!btn.disabled;
-}
-
-function computerTurn(moves,winningLines,n){
 
 
-
-       //computerMove(n);
-
-    //console.log(checkFilled(move),move);
-}
-
+///dodatek zostawic
 // const observer = new MutationObserver((mutations) => {
 //     mutations.forEach((mutation) => {
 //         if (mutation.attributeName === "value") {
@@ -138,7 +126,15 @@ function computerTurn(moves,winningLines,n){
 // obserwujemy atrybuty guzika
 //observer.observe(btn, { attributes: true });
 
+function changeClick() {
+    n=parseInt(document.getElementById("size").value);
+    let table=document.getElementById("gameBoard");
+    table.innerHTML="";
+    makeTable(n);
+}
+
 window.onload = function() {
     makeTable(n);
     document.getElementById("reset").addEventListener("click", resetClick);
+    document.getElementById("change").addEventListener("click", changeClick);
 };
