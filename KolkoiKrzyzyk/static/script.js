@@ -88,9 +88,12 @@ function computerMove(n,winningLines){
             const unique = new Set(values);
             if (unique.has(undefined) && unique.has("x")){
                 //let index=getRandomFloat(1,values.length);
-                for (let r = 0; r < values.length; r++) {
-                    if (values[r] === undefined)
-                        move=line[r];
+                if (!unique.has("o"))
+                {
+                    for (let r = 0; r < values.length; r++) {
+                        if (values[r] === undefined)
+                            move=line[r];
+                    }
                 }
 
                 break;
@@ -98,11 +101,14 @@ function computerMove(n,winningLines){
         }
     }
     let btn=document.getElementById(String(move));
-    if(!btn.disabled) {
-        btn.disabled=true;
-        btn.innerHTML="x";
-        moves.set(move,"x");
+    if (btn){
+        if(!btn.disabled) {
+            btn.disabled=true;
+            btn.innerHTML="x";
+            moves.set(move,"x");
+        }
     }
+
     //console.log(btn);
     //console.log(move);
 
