@@ -1,6 +1,7 @@
 
 let moves = new Map();
 let n = 3; // rozmiar planszy
+let linePicked=[];
 
 function makeTable(n){
     const table = document.getElementById("gameBoard");
@@ -20,7 +21,8 @@ function makeTable(n){
         }
         table.appendChild(tr);
     }
-    computerMove(n);
+    let winningLines=victoryLines(n);
+    computerMove(n,winningLines);
     return board;
 }
 
@@ -44,7 +46,8 @@ function resetClick() {
         moves.clear();
     }
     document.getElementById("result").innerHTML="";
-    computerMove(n);
+    let winningLines=victoryLines(n);
+    computerMove(n,winningLines);
 }
 
 function block_table(n){
@@ -81,21 +84,34 @@ function computerMove(n,winningLines){
     let move;
     if (moves.size===0){
         move= String(getRandomFloat(1,size));
+        linePicked = winningLines[move-1];
     }
     else {
         for (const line of winningLines) {
+            if (linePicked.length>0){
+                const values = linePicked.map(key => moves.get(key));
+                const unique = new Set(values);
+                if (!unique.has("o")){
+                    for (let r = 0; r < values.length; r++) {
+                        if (values[r] === undefined)
+                            move=linePicked[r];
+                    }
+                    break;
+                }
+            }
+
             const values = line.map(key => moves.get(key));
             const unique = new Set(values);
             if (unique.has(undefined) && unique.has("x")){
                 //let index=getRandomFloat(1,values.length);
-                if (!unique.has("o"))
+                //if (!unique.has("o"))
                 {
                     for (let r = 0; r < values.length; r++) {
                         if (values[r] === undefined)
                             move=line[r];
                     }
                 }
-
+                linePicked=line;
                 break;
             }
         }
