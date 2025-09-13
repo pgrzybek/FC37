@@ -43,7 +43,7 @@ function resetClick() {
     document.getElementById("result").innerHTML="";
 }
 function block_table(n){
-    for (let i = 1; i < 10; i++) {
+    for (let i = 1; i <(n*n)+1; i++) {
         let btn=document.getElementById(String(i));
         btn.disabled=true;
     }
@@ -53,11 +53,13 @@ function playerMoveMade(buttonId, moves){
     moves.set(buttonId,"o");
     if(checkWinner(moves,victoryLines(n)) === "o"){
         document.getElementById("result").innerHTML="wygrana";
+        block_table(n);
     }
     if(checkWinner(moves,victoryLines(n)) === "x"){
-
         document.getElementById("result").innerHTML="przegrana";
+        block_table(n);
     }
+
 }
 
 // const observer = new MutationObserver((mutations) => {
@@ -78,11 +80,5 @@ function playerMoveMade(buttonId, moves){
 window.onload = function() {
     makeTable(n);
     document.getElementById("reset").addEventListener("click", resetClick);
-    // for (let i = 1; i < 10; i++) {
-    //     let btn=document.getElementById(String(i));
-    //     btn.addEventListener("click", playerClick);
-    //     //observer.observe( btn, { attributes: true });
-    // }
 
-    //document.getElementById("1").addEventListener("click", handleClick);
 };
