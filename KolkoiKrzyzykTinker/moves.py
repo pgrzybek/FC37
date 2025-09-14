@@ -7,9 +7,19 @@ def get_random_int(min_val, max_val):
 def computerMove(n,winningLines,moves):
     boardSize=n*n
 #     let move;
+    move=0
     if len(moves)==0:
         move= get_random_int(0,boardSize-1)
-        linePicked = winningLines[move]
+        print(move)
+        if move<boardSize-1:
+            linePicked = winningLines[move]
+        else:
+            linePicked = winningLines[boardSize-2]
+
+        print(winningLines)
+
+        #move = moves[move]
+    return move
 #     }
 #     else {
 #         for (const line of winningLines) {

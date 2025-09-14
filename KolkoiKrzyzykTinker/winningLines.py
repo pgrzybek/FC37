@@ -13,9 +13,8 @@ def victoryLines(n):
 
      # przekątna odwrotna: 2,4,6
     #diag_anti = [i * n + (n - 1 - i) for i in range(n)]
-    lines.append([(i * n + i) for i in range(n)])
 
     lines.append([(i * n + (n - 1 - i))for i in range(n)])
-
+    lines.append([(i * n + i) for i in range(n)])
     return lines
 

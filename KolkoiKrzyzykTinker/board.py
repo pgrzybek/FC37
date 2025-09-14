@@ -5,22 +5,25 @@ from checkWinner import checkWinner
 from moves import computerMove
 from winningLines import victoryLines
 
+moves={}
 
 def updateBoard(btn,sideImage) :
     btn.config(image=sideImage)
     # wyłączenie przycisku
     btn.config(state="disabled")
-moves={}
+
 def blockBoard(buttons):
     for b in buttons:
         b.config(state="disabled")
 
-def resetBoard(buttons,result) :
+def resetBoard(buttons,result,n,winningLines,xImage) :
     global moves
     moves={}
     result.configure(text="")
     for b in buttons:
         b.config(image="", state="normal")
+    picked = computerMove(n, winningLines, moves)
+    updateBoard(buttons[picked], xImage)
 
 
 def makeBoard(n,root,oImage,xImage,columnSize,rowSize):
@@ -65,4 +68,6 @@ def makeBoard(n,root,oImage,xImage,columnSize,rowSize):
         buttonsFrame.grid_columnconfigure(i, minsize=columnSize)
         buttonsFrame.grid_rowconfigure(i, minsize=rowSize)
 
+    picked=computerMove(n,winningLines,moves)
+    updateBoard(buttons[picked],xImage)
     return buttons,result

@@ -21,8 +21,11 @@ oImage = tk.PhotoImage(file="o.gif")
 xImage = tk.PhotoImage(file="x.gif")
 frame=tk.Frame(root)
 frame.pack(side="bottom")
+winningLines=victoryLines(n)
 buttons,result=makeBoard(n,frame,oImage,xImage,sizeStart,sizeStart)
-reset=tk.Button(root,text="Reset",command=lambda buttons=buttons, result=result :resetBoard(buttons,result))
+reset=tk.Button(root,text="Reset",command=lambda buttons=buttons,
+                result=result,n=n,winningLines=winningLines :
+                resetBoard(buttons,result,n,winningLines,xImage))
 reset.pack()
 #reset.grid(row=1, sticky="nsew", padx=2, pady=2)
 
