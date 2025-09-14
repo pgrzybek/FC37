@@ -12,6 +12,7 @@ def updateBoard(btn,sideImage) :
     # wyłączenie przycisku
     btn.config(state="disabled")
 
+
 def blockBoard(buttons):
     for b in buttons:
         b.config(state="disabled")
@@ -27,15 +28,19 @@ def resetBoard(buttons,result,n,winningLines,xImage) :
 
 
 def makeBoard(n,root,oImage,xImage,columnSize,rowSize):
-
+    global moves
     def player_click(number):
         #print(f"Kliknięto przycisk {number}")
         pickedBtn = buttons[number]
         moves[number]= "o"
-        updateBoard(pickedBtn,oImage)
-        print(winningLines)
+        updateBoard(pickedBtn, oImage)
+        #print(winningLines)
         #print(moves.get(number))
-        #computerMove(n,winningLines,moves)
+        picked=computerMove(n, winningLines, moves)
+        moves[picked]= "x"
+
+        pickedBtn = buttons[picked]
+        updateBoard(pickedBtn, xImage)
         if len(moves)>2:
             if checkWinner(moves, winningLines) == "o":
                 result.config(text="wygrana")
@@ -56,7 +61,7 @@ def makeBoard(n,root,oImage,xImage,columnSize,rowSize):
         #row_buttons = []
         for c in range(n):
             #counter = r * n + c
-            btn = tk.Button(buttonsFrame, #text=str(counter), width=10, height=5,
+            btn = tk.Button(buttonsFrame, text=str(counter), #width=10, height=5,
                                           command=lambda num=counter: player_click(num))
             btn.grid(row=r, column=c, sticky="nsew", padx=2, pady=2)
             buttons.append(btn)
@@ -68,6 +73,8 @@ def makeBoard(n,root,oImage,xImage,columnSize,rowSize):
         buttonsFrame.grid_columnconfigure(i, minsize=columnSize)
         buttonsFrame.grid_rowconfigure(i, minsize=rowSize)
 
-    picked=computerMove(n,winningLines,moves)
-    updateBoard(buttons[picked],xImage)
+
+    move = computerMove(n, winningLines, moves)
+    moves[move] = "x"
+    updateBoard(buttons[move],xImage)
     return buttons,result
