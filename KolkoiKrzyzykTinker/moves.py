@@ -1,48 +1,81 @@
 import random
+import sys
+import copy
+linePicked=[]
+linesNotUsed = []
+
 
 def get_random_int(min_val, max_val):
     return random.randint(min_val, max_val)
-linePicked=[]
 
-def pickline(winningLines,boardSize):
+
+def pickline(linesUsedNot, move):
     global linePicked
-    move = get_random_int(0, boardSize - 1)
-    for line in winningLines:
-        if move in line:
-            linePicked = line
+    for line2 in linesUsedNot:
+        if move in line2:
+            linePicked = line2.copy()
+            linePicked.remove(move)
             break
-    return move
+
+    return linePicked
+
+def checkLine(moves, lineToCheck):
+    values = [moves.get(key) for key in lineToCheck]
+    unique = set(values)
+    #if "x" in unique and None in unique:
+    if "o" not in unique:
+            for i in range(len(values)):
+                if values[i] is None:
+                    print(i)
+                    move = i
+                    return move
+    else: pass # zmien cholerna linie
+
+    return None
+
+
 
 def computerMove(n,winningLines,moves):
+    # zrob losowy ruch
+    # wybierz linie
+    # sprawdz linie czy nie ma ruchu przeciwnika
+    # jesli jest wybierz linie odrzuc linie
+    # jesli nie dodaj ruch w linii
     boardSize=n*n
 #     let move;
     move=0
+
     global linePicked
+    global linesNotUsed
     #linePicked=[]
     if len(moves)==0:
-        move=pickline(winningLines,boardSize)
-
-        print(f"linePicked={linePicked}")
+        linesNotUsed=[]
+        linesNotUsed=copy.deepcopy(winningLines)
+        move = get_random_int(0, boardSize - 1)
+        linePicked=pickline(linesNotUsed,move)
+        print(f"linesNotUsed:{linesNotUsed}")
+        return move
+       # print(f"linePicked={linePicked}")
     else:
-        #for line in winningLines:
+            #wybierz linie
             if len(linePicked) > 0:
-                values = [moves.get(key) for key in linePicked ]
+                values = [moves.get(key) for key in linePicked]
                 unique = set(values)
-                #print(line)
-                # print(f"if1 {unique}")
-                # print(f"if1 {linePicked}")
-                # print(values)
-                # print(moves)
+                # if "x" in unique and None in unique:
                 if "o" not in unique:
-                    for i in range(len(values)):
-                        if values[i] is None:
-                            move=i
-                else:
+                    move=next(iter(linePicked))
+                    linePicked.remove(move)
+                # if checkLine(moves,linePicked):
+                #     move=checkLine(moves,linePicked)
+            else:
                     #do poprawy
-                    move=pickline(winningLines,boardSize)
+                    linePicked=[]
+                    move = get_random_int(0, boardSize - 1)
+                    linePicked = pickline(linesNotUsed,move)
+                        #if "x" in unique and None in unique:
                     print(f"linePicked={linePicked}")
 
-                    #jezeli jest o uniqu znajdz nowa linie
+                    #jezeli jest o  w uniqu znajdz nowa linie
                     # result = next(iter(unique))
                     # if result == None:
                     #     index=unique

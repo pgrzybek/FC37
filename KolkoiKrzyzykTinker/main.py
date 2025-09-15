@@ -3,6 +3,7 @@ from board import makeBoard, resetBoard
 
 from winningLines import victoryLines
 
+
 # def przycisk_klik():
 #     print("Przycisk kliknięty!")
 

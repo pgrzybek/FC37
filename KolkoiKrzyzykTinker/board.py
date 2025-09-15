@@ -34,11 +34,11 @@ def makeBoard(n,root,oImage,xImage,columnSize,rowSize):
         pickedBtn = buttons[number]
         moves[number]= "o"
         updateBoard(pickedBtn, oImage)
-        #print(winningLines)
+        print(f" wining lines{winningLines}")
         #print(moves.get(number))
         picked=computerMove(n, winningLines, moves)
         moves[picked]= "x"
-
+        print(f" wining lines{winningLines}")
         pickedBtn = buttons[picked]
         updateBoard(pickedBtn, xImage)
         if len(moves)>2:
