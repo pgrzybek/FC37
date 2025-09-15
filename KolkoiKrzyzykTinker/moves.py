@@ -1,5 +1,5 @@
 import random
-import sys
+
 import copy
 linePicked=[]
 linesNotUsed = []
@@ -13,7 +13,7 @@ def pickline(linesUsedNot, move):
     global linePicked
     for line2 in linesUsedNot:
         if move in line2:
-            linePicked = line2.copy()
+            linePicked = line2.copy()#mutable copy daje druga wartosc niezalezna
             linePicked.remove(move)
             break
 
