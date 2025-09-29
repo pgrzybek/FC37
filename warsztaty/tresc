@@ -1,0 +1,39 @@
+Treść zadania
+
+1.Napisz program w języku Python wykorzystujący klasy, który będzie symulował prostą bibliotekę.
+
+Zdefiniuj klasę Ksiazka, która będzie posiadała:
+
+atrybuty: tytul, autor, rok, dostepna (wartość domyślna: True),
+
+metodę opis() zwracającą informację o książce w formacie:
+„Tytuł – Autor (rok) [status]”, gdzie status to „dostępna” lub „wypożyczona”,
+
+metodę wypozycz(), która zmienia dostępność książki (jeśli jest dostępna, oznacza jako wypożyczona; jeśli nie – zwraca komunikat, że książka już jest wypożyczona),
+
+metodę zwroc(), która przywraca książkę jako dostępną.
+
+2.Zdefiniuj klasę Biblioteka, która będzie przechowywała listę obiektów klasy Ksiazka.
+Klasa powinna mieć metody:
+
+dodaj_ksiazke(ksiazka) – dodaje książkę do biblioteki,
+
+wyswietl_ksiazki() – wypisuje wszystkie książki w bibliotece wraz z ich statusem,
+
+znajdz_po_autorze(autor) – zwraca listę książek danego autora,
+
+wypozycz_ksiazke(tytul) – wypożycza książkę o podanym tytule,
+
+zwroc_ksiazke(tytul) – zwraca książkę o podanym tytule.
+
+3.Napisz krótki program testujący działanie klas:
+
+dodaj kilka książek do biblioteki,
+
+wyświetl wszystkie książki,
+
+wypożycz jedną książkę, spróbuj wypożyczyć ją drugi raz,
+
+wyświetl stan biblioteki po wypożyczeniu,
+
+zwróć książkę i ponownie wyświetl stan biblioteki.
