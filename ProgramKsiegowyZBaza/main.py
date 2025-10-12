@@ -1,37 +1,13 @@
-wartoscKonta=1000
-skladMagazynu={}
-operacje={}
+from OperacjeNaPliku import odczytajKonto, zapiszPrzyKoncu, kontoPLik, odczytajMagazyn,zachowajStanMagazynu,zachowajOperacje,odczytajOperacje
+from Przedmioty import Przedmioty
+from Operacje import Operacje
 
-def zapisz(stanMagazynu):
-    pass#TODO jason strigify
+from SprawdzCzyToLiczba import sprawdz_czy_to_liczba
 
-def odczytaj(stanMagazynu):
-    pass
+#wartoscKonta=1000
+#skladMagazynu={}
+#operacje={}
 
-def sprawdz_czy_to_liczba(wartosc):
-    while 1:
-        try:
-            wartosc = int(wartosc)
-            break
-            # this will raise a ValueError
-        except ValueError:
-            print("To nie jest liczba")
-            wartosc = input("Podaj liczbe \n")
-    return wartosc
-
-class Przedmioty:
-    def __init__(self,nazwa,cena,ilosc):
-        self.nazwa=nazwa
-        self.cena=cena
-        self.ilosc=ilosc
-    def wypisz(self):
-        print(self.nazwa,self.cena,self.ilosc)
-class Operacje:
-    def __init__(self,operacja,przedmiot):
-        self.operacja = operacja
-        self.przedmiot=przedmiot
-    def wypisz(self):
-        print(self.operacja,self.przedmiot.nazwa,self.przedmiot.cena,self.przedmiot.ilosc)
 
 
 def operacje_wykonane(slownik, wartosc):
@@ -59,6 +35,7 @@ def saldo(kwota_pieniedzy):
     else:
         print("Zla komenda")
     return kwota_pieniedzy
+
 def sprzedarz(zkonto,zmagazyn):
     print("Sprzedarz")
     nazwa = input("Podaj nazwe  produktu: ")
@@ -71,10 +48,12 @@ def sprzedarz(zkonto,zmagazyn):
             zkonto = zkonto+zmagazyn[nazwa].ilosc*zmagazyn[nazwa].cena
             sprzedany_przedmiot=Operacje("sprzedarz",zmagazyn[nazwa])
             operacje_wykonane(operacje, sprzedany_przedmiot)
+
         elif ilosc==zmagazyn[nazwa].ilosc:
             zkonto = zkonto + zmagazyn[nazwa].ilosc * zmagazyn[nazwa].cena
             sprzedany_przedmiot = Operacje("sprzedarz", zmagazyn[nazwa])
-            operacje_wykonane(operacje, sprzedany_przedmiot)
+            operacje.append(sprzedany_przedmiot)
+            #operacje_wykonane(operacje, sprzedany_przedmiot)
             del zmagazyn[nazwa]
         else:
             print("Niewlasciwa ilosc")
@@ -90,15 +69,18 @@ def zakup(zkonto, zmagazyn):
     ilosc=sprawdz_czy_to_liczba(ilosc)
     koszt =int(cena)*int(ilosc)
     zakupiono = zkonto - koszt
-    if zakupiono > 0:
+    if zakupiono >= 0:
         produkt = Przedmioty(nazwa, cena, ilosc)
+        #productDict=produkt.__dict__
         if not nazwa in zmagazyn:
             zmagazyn[nazwa]=produkt
         else:
             zmagazyn[nazwa].ilosc=zmagazyn[nazwa].ilosc+ilosc
         zkonto=zakupiono
+        produkt = Przedmioty(nazwa, cena, ilosc)
         zakupiony_przedmiot = Operacje("zakup", produkt)
-        operacje_wykonane(operacje, zakupiony_przedmiot)
+        operacje.append(zakupiony_przedmiot)
+        #operacje_wykonane(operacje, zakupiony_przedmiot)
     else:
         print(f"Za malo pieniedzy na koncie brakuje {abs(zakupiono)} ")
 
@@ -112,12 +94,12 @@ def lista():
     print("Lista")
     print("nazwa", "ilosc", "cena")
     for jednostka in skladMagazynu:
-        #print(skladMagazynu[jednostka].nazwa,skladMagazynu[jednostka].ilosc,skladMagazynu[jednostka].cena)
+        #print(skladMagazynu[jednostka],skladMagazynu[jednostka]["ilosc"],skladMagazynu[jednostka]["cena"])
         skladMagazynu[jednostka].wypisz()
     input("Nacisnij dowolny klawisz")
 def magazyn():
     print("Magazyn")
-    przedmiot=input("Podaj nazwe przedmiotu do znalezienia")
+    przedmiot=input("Podaj nazwe przedmiotu do znalezienia ")
     if przedmiot in skladMagazynu:
         skladMagazynu[przedmiot].wypisz()
     else:
@@ -125,17 +107,17 @@ def magazyn():
     input("Nacisnij dowolny klawisz")
 def przeglad():
     print("Przeglad")
-    zakres_start=input(f"Podaj zakres poczatek zakresu od 1")
+    zakres_start=input(f"Podaj zakres poczatek zakresu od 0")
 
     zakres_koniec = input(f"Podaj koniec zakresu do {len(operacje)}")
 
     if zakres_start=="" or zakres_koniec=="":
         for i in range(len(operacje)):
-            operacje[i].wypisz()
+            operacje[str(i)].wypisz()
     else:
         zakres_start = sprawdz_czy_to_liczba(zakres_start)
         zakres_koniec = sprawdz_czy_to_liczba(zakres_koniec)
-        if zakres_start>1 and zakres_koniec<len(operacje):
+        if zakres_start>0 and zakres_koniec<len(operacje):
             for i in range(zakres_start,zakres_koniec):
                operacje[i].wypisz()
         else:
@@ -143,6 +125,13 @@ def przeglad():
 
     input("Nacisnij dowolny klawisz")
 
+
+wartoscKonta=odczytajKonto()
+skladMagazynu=odczytajMagazyn()
+operacje=odczytajOperacje()
+print(operacje['0'])
+#magazynik=odczytajMagazyn()
+#print(magazynik)
 while 1:
     print("1.Saldo")
     print("2.Sprzedarz")
@@ -169,6 +158,11 @@ while 1:
     if opcjaGlowna == 7:
         przeglad()
     if opcjaGlowna == 8:
+        print(skladMagazynu,wartoscKonta,operacje)
+        zapiszPrzyKoncu(wartoscKonta,skladMagazynu,operacje)
+        zachowajStanMagazynu(skladMagazynu)
+        zachowajOperacje(operacje)
+
         break
     if 8< opcjaGlowna < 1:
         print("Zly wobor ")

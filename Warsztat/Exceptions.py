@@ -1,0 +1,2 @@
+class Wyjatek(Exception):
+    pass

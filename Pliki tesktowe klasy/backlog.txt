@@ -1,0 +1,8 @@
+Plik z wyjasnieniami niektore rzeczy sobie cwicze np dekoratory tutaj
+klasa głowna ma miec metody wczytania pliku
+klasa dziedziczaca ma typ pliku
+w klasie głownej jest metoda sprawdzajaca plik
+ladujaca po lini
+zapisujaca
+oczywiscie dekorator robi with file
+gdy plik nie został zaladowany udekoruj go inaczej uzyj wersji zaladowanej
