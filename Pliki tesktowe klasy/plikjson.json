@@ -1,0 +1,20 @@
+[
+  {
+    "imie": "Anna",
+    "nazwisko": "Kowalska",
+    "stanowisko": "Programista",
+    "wynagrodzenie": 12000
+  },
+  {
+    "imie": "Jan",
+    "nazwisko": "Nowak",
+    "stanowisko": "Analityk",
+    "wynagrodzenie": 9800
+  },
+  {
+    "imie": "Ewa",
+    "nazwisko": "Wiśniewska",
+    "stanowisko": "Tester",
+    "wynagrodzenie": 8700
+  }
+]

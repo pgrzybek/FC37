@@ -6,3 +6,5 @@ ladujaca po lini
 zapisujaca
 oczywiscie dekorator robi with file
 gdy plik nie został zaladowany udekoruj go inaczej uzyj wersji zaladowanej
+stworz plik gdy go nie ma
+zapisac do innego pliku a pozniej  shutil.move

@@ -28,7 +28,7 @@ class FileReader:
         return line[:-1]
 
 
-r=FileReader("plik.csv")
+r=FileReader("files/plik.csv")
 # print(next(r))
 # print(next(r))
 # print(next(r))
