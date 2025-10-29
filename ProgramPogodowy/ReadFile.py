@@ -44,7 +44,7 @@ class ReadFile(BaseFile):
                 with open(self.filepath, "r") as f:
                     met(self, *args, **kwargs, f=f)
             except FileNotFoundError:
-                print("File not found write in it first")  # TODO stworz plik
+                print("File not found write in it first")
                 logger.error("File not found write in it first")
 
         return wrapper2

@@ -75,7 +75,7 @@ class WriteFile(BaseFile):
                             f.write(self.delimiter)
                     f.write("\n")
         shutil.move(self.tempFile, self.filepath)
-    #TODO Zapis do csv i do pickle i json
+
 
     def writeCsv(self):
         with open(self.tempFile, "w" ,newline='') as f:
