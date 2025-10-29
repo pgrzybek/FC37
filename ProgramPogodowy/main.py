@@ -15,7 +15,7 @@ longitude = 18.531524949051327
 #searched_date="2025-10-30"
 #print(searched_date)
 
-searched_date = input("Podaj date w formacie ROK-MIeSIAC-DZIEN \n")
+searched_date = input("Podaj date w formacie ROK-MIESIAC-DZIEN \n")
 if searched_date == "":
     searched_date = datetime.date.today() + datetime.timedelta(days=1)
 else:
