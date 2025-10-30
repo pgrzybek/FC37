@@ -1,13 +1,12 @@
 # plik nie do sprawdzania
 import unittest
 from datetime import date
+
 from pyexpat.errors import messages
+
 from ReadFile import ReadFile
-from main import forecast
-
-
 # importujemy testowaną funkcję
-
+from WeatherForecast import WeatherForecast
 
 
 class UnitTest(unittest.TestCase):
@@ -17,13 +16,13 @@ class UnitTest(unittest.TestCase):
         longitude = 18.531524949051327
         searched_date = str(date.today())
         try:
-          forecast(searched_date)
+            w = WeatherForecast(latitude, longitude, searched_date)
 
         except Exception as e:
             self.fail(f"Funkcja rzuciła wyjątek: {e}")
         searched_date = "2025-10-31"
         try:
-           forecast(searched_date)
+            w = WeatherForecast(latitude, longitude, searched_date)
 
         except Exception as e:
             self.fail(f"Funkcja rzuciła wyjątek: {e}")
@@ -39,7 +38,7 @@ class UnitTest(unittest.TestCase):
     def testcsv(self):
         try:
             searched = str(date.today())
-            r = ReadFile("data.csv", searched)
+            r = ReadFile("data.json", searched)
             self.messages(r)
         except Exception as e: #Exception as e:
             self.fail(f"Funkcja rzuciła wylatek {e}")

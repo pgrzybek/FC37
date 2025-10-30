@@ -28,7 +28,7 @@ class ReadFile(BaseFile):
         self.load()
 
 
-        # self.makeFile()
+
 
     @staticmethod
     def decorateLoad(met):
@@ -52,18 +52,13 @@ class ReadFile(BaseFile):
     #
     def __get__(self, obj, objtype):
         return functools.partial(self.__call__, obj)
-        return self.lines
+
     def __getitem__(self, item):
         dictLine=dict(self.foundLine)
         return dictLine[item]
-    # self.done = False
+
     def __call__(self, *args, **kwargs):
         return self.lines
-        # print("cos działą")
-        # f = 2
-        # self.lines.append(f)
-        # return self.decorateLoad(self)(*args, **kwargs)
-        #
 
     def checkExtension(self):
         name, ext = os.path.splitext(self.filepath)
@@ -128,13 +123,18 @@ class ReadFile(BaseFile):
 
     def checkLoop(self):
         result = self.searched
-        i=0
+
         for line in self.lines:
             if result in line and result != "":
                 self.found = True
-                self.foundLine[line]=self.lines[line]
-                break
-            i=i+1
+                self.foundLine = line
+        # for i in range(len(self.lines)):
+        #     if result == self.lines[i] and result != "":
+        #         self.found = True
+        #         self.foundLine[result]=self.lines[i+1]
+        #         #self.foundLine[line]=self.lines[line]
+        #         break
+        #     i=i+1
 
 
     @decorateLoad
