@@ -9,7 +9,7 @@ longitude = 18.531524949051327
 
 searched_date = input("Podaj date w formacie ROK-MIESIAC-DZIEN \n")
 forecast=WeatherForecast(latitude,longitude,searched_date)
-print(forecast.items())
+
 
 
 

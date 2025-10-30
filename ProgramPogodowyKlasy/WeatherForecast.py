@@ -61,6 +61,17 @@ class WeatherForecast:
         return iter(self.data)
 
     def items(self):
-        for item in self.data:
+        r = ReadFile("data.json", "")
+        for d in r.lines:  # przechodzimy po każdym słowniku
+            for k, v in d.items():  # bierzemy pary (klucz, wartość)
+                if  v>0:  # warunek sprawdzający wartość
+                    result=(k, "Będzie padać")
+                    yield result
+                elif v==0:
+                    result = (k, "Nie będzie padać")
+                    yield result
+                else:
+                    result = (k, "Nie wiem")
+                    yield result
 
-            yield item, self.data[item]
+

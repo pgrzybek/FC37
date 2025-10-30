@@ -17,6 +17,14 @@ class UnitTest(unittest.TestCase):
         searched_date = str(date.today())
         try:
             w = WeatherForecast(latitude, longitude, searched_date)
+            gen= w.items()
+            while gen:
+                try:
+                    print(next(gen))
+                except StopIteration:
+                    break
+
+
 
         except Exception as e:
             self.fail(f"Funkcja rzuciła wyjątek: {e}")
