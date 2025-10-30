@@ -12,7 +12,7 @@ logging.basicConfig(
     level=logging.INFO,                      # minimalny poziom logów
     format="%(asctime)s [%(levelname)s] %(message)s",  # format wiadomości
     handlers=[
-        logging.FileHandler("files/app.log"),      # zapis do pliku
+        #logging.FileHandler("files/app.log"),      # zapis do pliku
         logging.StreamHandler()              # oraz na konsolę
     ]
 )
@@ -26,9 +26,6 @@ class ReadFile(BaseFile):
         super().__init__(filepath)
         self.searched = searched
         self.load()
-
-
-        # self.makeFile()
 
     @staticmethod
     def decorateLoad(met):
@@ -44,7 +41,7 @@ class ReadFile(BaseFile):
                 with open(self.filepath, "r") as f:
                     met(self, *args, **kwargs, f=f)
             except FileNotFoundError:
-                print("File not found write in it first")  # TODO stworz plik
+                print("File not found write in it first")
                 logger.error("File not found write in it first")
 
         return wrapper2
@@ -53,14 +50,12 @@ class ReadFile(BaseFile):
     def __get__(self, obj, objtype):
         return functools.partial(self.__call__, obj)
 
-    # self.done = False
+    def __getitem__(self, item):
+        dictLine=dict(self.foundLine)
+        return dictLine[item]
+
     def __call__(self, *args, **kwargs):
-        pass
-        # print("cos działą")
-        # f = 2
-        # self.lines.append(f)
-        # return self.decorateLoad(self)(*args, **kwargs)
-        #
+        return self.lines
 
     def checkExtension(self):
         name, ext = os.path.splitext(self.filepath)
@@ -121,24 +116,29 @@ class ReadFile(BaseFile):
         #self.loadloop(reader)
         for line in reader:
             self.lines.append(line)
-            if result in line and result != "":
-                self.found = True
-                self.foundLine.append(line)
-                break
+        self.checkLoop()
 
-    def loadloop(self,readFile):
+    def checkLoop(self):
         result = self.searched
-        for line in readFile:
-            self.lines.append(line)
+
+        for line in self.lines:
             if result in line and result != "":
                 self.found = True
-                self.foundLine.append(line)
-                break
+                self.foundLine = line
+        # for i in range(len(self.lines)):
+        #     if result == self.lines[i] and result != "":
+        #         self.found = True
+        #         self.foundLine[result]=self.lines[i+1]
+        #         #self.foundLine[line]=self.lines[line]
+        #         break
+        #     i=i+1
+
 
     @decorateLoad
     def loadjson(self, f):
         try:
             self.lines = json.load(f)
+            self.checkLoop()
         except json.decoder.JSONDecodeError:
             print("To nie plik json")
             logger.log(logging.ERROR, "To nie plik json")
@@ -147,6 +147,7 @@ class ReadFile(BaseFile):
     def loadPickle(self, f):
         try:
             self.lines = pickle.load(f)
+            self.checkLoop()
         except pickle.UnpicklingError:
             print("To nie plik pickle")
             logger.log(logging.ERROR, "To nie plik pickle")
@@ -156,10 +157,10 @@ class ReadFile(BaseFile):
             yield i
 
 
-r = ReadFile("files/out.txt","Jan")
-
-print(r.foundLine)
-print(r.lines)
+# r = ReadFile("files/out.txt","Jan")
+#
+# print(r.foundLine)
+# print(r.lines)
 # r.loadcsv()
 # print(r.lines)
 # r.loadjson()

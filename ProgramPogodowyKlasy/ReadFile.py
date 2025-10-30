@@ -27,9 +27,6 @@ class ReadFile(BaseFile):
         self.searched = searched
         self.load()
 
-
-
-
     @staticmethod
     def decorateLoad(met):
         """
