@@ -128,18 +128,13 @@ class ReadFile(BaseFile):
 
     def checkLoop(self):
         result = self.searched
-
+        i=0
         for line in self.lines:
             if result in line and result != "":
                 self.found = True
-                self.foundLine = line
-        # for i in range(len(self.lines)):
-        #     if result == self.lines[i] and result != "":
-        #         self.found = True
-        #         self.foundLine[result]=self.lines[i+1]
-        #         #self.foundLine[line]=self.lines[line]
-        #         break
-        #     i=i+1
+                self.foundLine[line]=self.lines[line]
+                break
+            i=i+1
 
 
     @decorateLoad
