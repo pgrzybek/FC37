@@ -9,6 +9,6 @@ class ChangeFile(ReadFile):
         super().__init__(filepath)
         self.searched = searched
 
-    def change(self,searched,toReplace):
+    def changePOS(self,toReplace):
         pass
     #TODO zrobic wartosc szukana

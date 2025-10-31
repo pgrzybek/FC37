@@ -7,3 +7,5 @@ class BaseFile:
         self.searched = ""
         self.found = False
         self.foundLine=[]
+        self.posX=0
+        self.posY=0
