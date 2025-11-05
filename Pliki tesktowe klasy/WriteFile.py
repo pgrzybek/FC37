@@ -1,5 +1,6 @@
 import csv
 import json
+import os
 import sys
 import tempfile
 
@@ -25,7 +26,7 @@ class WriteFile(BaseFile):
         #self.tempFile = tempfile.TemporaryFile().name
         self.tempFile="dane.temp"
         self.lines = data
-        self.writeJson()
+        self.write()
     @staticmethod
     def fileDontExist(StartValue, file):
         choice = input("Plik nie zostal znaleziony chcesz utworzyc nowy? (t/n)")
@@ -49,6 +50,24 @@ class WriteFile(BaseFile):
         return wrapper2
 
 
+    def write(self):
+        if os.path.exists(self.filepath):
+            extension = self.checkExtension()
+            if extension == ".csv":
+                self.writeCsv()
+            if extension == ".json":
+                self.writeJson()
+            if extension == ".txt":
+                self.writetxt()
+            if extension == ".pickle":
+                self.writePickle()
+        else:
+            choice = input("Plik nie istnieje stworzyc t/n")
+            if choice == "t":
+                with open(self.filepath, "w") as f:
+                    f.write(" ")
+            else:
+                sys.exit()
 
     def writetxt(self):
         """
@@ -57,18 +76,20 @@ class WriteFile(BaseFile):
         :return:
 
         """
+        if not os.path.exists(self.filepath):
+            with open(self.tempFile, "w") as f:
+                f.write(" ")
         with open(self.tempFile, "w") as f:
             if not self.lines:
                 f.write(" ")
             else:
                 for line in self.lines:
-                    for i in range(line.count()):
+                    for i in range(len(line)):
                         f.write(line[i])
-                        if i<line.count()-1:
+                        if i<len(line)-1:
                             f.write(self.delimiter)
                     f.write("\n")
         shutil.move(self.tempFile, self.filepath)
-    #TODO Zapis do csv i do pickle i json
 
     def writeCsv(self):
         with open(self.tempFile, "w" ,newline='') as f:
@@ -90,9 +111,11 @@ class WriteFile(BaseFile):
             json.dump(self.lines, f)
         shutil.move(self.tempFile, self.filepath)
 
-r=ReadFile("files/out.txt","")
 
-w=WriteFile("files/plik.json", r.lines)
+#
+# r=ReadFile("files/out.txt","")
+#
+# w=WriteFile("files/plik.json", r.lines)
 
 
 

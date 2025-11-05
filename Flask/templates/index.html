@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+Test<br>
+strony<br>
+Html<br>
+<form action="/myform" method="GET">
+    <label for="name">Imie</label><br>
+    <input id="name" name="name" type="text"><br>
+    <label for="surname">Nazwisko</label><br>
+    <input id="surname" name="surname" type="text"><br>
+    <input type="submit" value="Zatwierdz">
+</form>
+{%if name%}Hello{{name}}{%else%}Hello Stranger{%endif%}
+<ol>
+    {%for item in my_list%}
+    <li>{{item}}</li>
+    {%endfor%}
+
+</ol>
+</body>
+</html>

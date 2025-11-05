@@ -57,11 +57,7 @@ class ReadFile(BaseFile):
     def __call__(self, *args, **kwargs):
         return self.lines
 
-    def checkExtension(self):
-        name, ext = os.path.splitext(self.filepath)
-        # if ext.lower() != extension:
-        #      self.filepath = name + extension
-        return ext
+
 
     # probuje sobie dekoratory
 
@@ -118,20 +114,14 @@ class ReadFile(BaseFile):
             self.lines.append(line)
         self.checkLoop()
 
+
     def checkLoop(self):
         result = self.searched
-
         for line in self.lines:
             if result in line and result != "":
                 self.found = True
                 self.foundLine = line
-        # for i in range(len(self.lines)):
-        #     if result == self.lines[i] and result != "":
-        #         self.found = True
-        #         self.foundLine[result]=self.lines[i+1]
-        #         #self.foundLine[line]=self.lines[line]
-        #         break
-        #     i=i+1
+
 
 
     @decorateLoad

@@ -1,3 +1,6 @@
+import os
+
+
 class BaseFile:
     def __init__(self, filepath):
     # self.fp = open(filepath)
@@ -9,3 +12,9 @@ class BaseFile:
         self.foundLine=[]
         self.posX=0
         self.posY=0
+
+    def checkExtension(self):
+        name, ext = os.path.splitext(self.filepath)
+        # if ext.lower() != extension:
+        #      self.filepath = name + extension
+        return ext
