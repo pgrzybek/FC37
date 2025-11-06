@@ -5,23 +5,25 @@ import os
 import pickle
 
 import logging
+import sys
 
 from BaseFile import BaseFile
 
 logging.basicConfig(
-    level=logging.INFO,                      # minimalny poziom logów
+    level=logging.INFO,  # minimalny poziom logów
     format="%(asctime)s [%(levelname)s] %(message)s",  # format wiadomości
     handlers=[
-        #logging.FileHandler("files/app.log"),      # zapis do pliku
-        logging.StreamHandler()              # oraz na konsolę
+        # logging.FileHandler("files/app.log"),      # zapis do pliku
+        logging.StreamHandler()  # oraz na konsolę
     ]
 )
 
 logger = logging.getLogger("MyLogger")
 
+
 class ReadFile(BaseFile):
 
-    def __init__(self, filepath,searched):
+    def __init__(self, filepath, searched):
         # self.fp = open(filepath)
         super().__init__(filepath)
         self.searched = searched
@@ -51,13 +53,11 @@ class ReadFile(BaseFile):
         return functools.partial(self.__call__, obj)
 
     def __getitem__(self, item):
-        dictLine=dict(self.foundLine)
+        dictLine = dict(self.foundLine)
         return dictLine[item]
 
     def __call__(self, *args, **kwargs):
         return self.lines
-
-
 
     # probuje sobie dekoratory
 
@@ -69,12 +69,11 @@ class ReadFile(BaseFile):
             return []
         # return self
 
-
     def __len__(self):
         return len(self.lines)
 
     def load(self):
-        if  os.path.exists(self.filepath):
+        if os.path.exists(self.filepath):
             extension = self.checkExtension()
             if extension == ".csv":
                 self.loadcsv()
@@ -84,6 +83,13 @@ class ReadFile(BaseFile):
                 self.loadtxt()
             if extension == ".pickle":
                 self.loadPickle()
+        else:
+            choice = input("Plik nie istnieje stworzyc t/n")
+            if choice == "t":
+                with open(self.filepath, "w") as f:
+                    f.write(" ")
+            else:
+                sys.exit()
 
     @decorateLoad
     def loadtxt(self, f):
@@ -96,24 +102,23 @@ class ReadFile(BaseFile):
 
         for line in f:
             splited = line.split(self.delimiter)
-            splited[-1]=splited[-1].strip()#usuwa ostatni element czyli znak konca lini
+            splited[-1] = splited[-1].strip()  # usuwa ostatni element czyli znak konca lini
             self.lines.append(splited)
-            #del self.lines[0][-1]
+            # del self.lines[0][-1]
             if result in line and result != "":
                 self.found = True
                 self.foundLine.append(splited)
-                #del self.foundLine[0][-1]#usuwa ostatni element czyli znak konca lini
+                # del self.foundLine[0][-1]#usuwa ostatni element czyli znak konca lini
                 break
 
     @decorateLoad
     def loadcsv(self, f):
         result = self.searched
         reader = csv.reader(f, delimiter=self.delimiter)
-        #self.loadloop(reader)
+        # self.loadloop(reader)
         for line in reader:
             self.lines.append(line)
         self.checkLoop()
-
 
     def checkLoop(self):
         result = self.searched
@@ -121,8 +126,6 @@ class ReadFile(BaseFile):
             if result in line and result != "":
                 self.found = True
                 self.foundLine = line
-
-
 
     @decorateLoad
     def loadjson(self, f):
@@ -145,7 +148,6 @@ class ReadFile(BaseFile):
     def my_generator(self):
         for i in range(len(self.lines)):
             yield i
-
 
 # r = ReadFile("files/out.txt","Jan")
 #

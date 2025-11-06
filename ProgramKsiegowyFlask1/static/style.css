@@ -1,0 +1,14 @@
+label{
+    padding: 6px;
+
+
+}
+.submit{
+    border-radius: 20px;
+    background-color: steelblue;
+}
+form{
+    border: 1px solid black;
+    border-collapse: collapse;
+    width: 40%;
+}
