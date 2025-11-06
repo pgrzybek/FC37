@@ -1,7 +1,6 @@
 label{
     padding: 6px;
 
-
 }
 .submit{
     border-radius: 20px;
@@ -10,5 +9,22 @@ label{
 form{
     border: 1px solid black;
     border-collapse: collapse;
-    width: 40%;
+
 }
+#forms{
+
+    align-self: center;
+    display: flex;                    /* włącz flexbox */
+    justify-content: space-between;
+
+}
+#header{
+    display: flex;
+    font-style: oblique;
+    font-weight: bold;
+    font-palette: light;
+    background: steelblue;
+    color: white;
+}
+
+
