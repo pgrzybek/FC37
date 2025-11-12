@@ -113,7 +113,7 @@ class ReadFile(BaseFile):
 
     @decorateLoad
     def loadcsv(self, f):
-        result = self.searched
+
         reader = csv.reader(f, delimiter=self.delimiter)
         # self.loadloop(reader)
         for line in reader:

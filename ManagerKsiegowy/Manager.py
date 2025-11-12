@@ -1,20 +1,49 @@
-from SprawdzCzyToLiczba import sprawdz_czy_to_liczba
-from OperacjeNaPliku import odczytajKonto
-from OperacjeNaPliku import odczytajMagazyn
-from OperacjeNaPliku import odczytajOperacje
+from Magazyn import Magazyn
+from OperacjeNaPliku import  zapiszPrzyKoncu, zachowajStanMagazynu, zachowajOperacje
 
-class Manager:
-    wartoscKonta = None
 
-    def __init__(self):
-        self.wartoscKonta = odczytajKonto()
-        self.skladMagazynu = odczytajMagazyn()
-        self.operacje = odczytajOperacje()
+class Manager(Magazyn):
 
-    def execute(self):
-        pass
+    def assign(self, typ, nazwa, ilosc, cena,wplataLubWyplata):
+        """
+        Przypisywanie wyoluje saldo zakup lub sprzedarz
+        :param wplataLubWyplata:
+        :param cena: cena przedmiotu do zakupu lub sprzedarzy sluzy tez do wplaty lub wyplaty
+        :param ilosc: ilosc przedmiotu do zakupu lub sprzedarzy
+        :param nazwa:
 
-    def assign(self):
-        pass
+        :param typ: Typ operacji parametry to s z k .s,e to sprzedarz ,z to zakup ,k to konto.Działa na pełnych nazwach lub literach , e to end czyli koniec
+        :return:
+        """
+        if typ == "e" or typ == "koniec":
+            zapiszPrzyKoncu(self.wartoscKonta, self.skladMagazynu, self.operacje)
+            zachowajStanMagazynu(self.skladMagazynu)
+            zachowajOperacje(self.operacje)
+        if typ == 'konto' or typ == 'k':
+            self.saldo(wplataLubWyplata, cena)
+        if typ == "zakup" or typ == "z":
+            self.zakup(nazwa, ilosc, cena)
+        if typ == "sprzedarz" or typ == "s":
+            self.sprzedarz(nazwa, ilosc)
+
+    def execute(self,typ,wybor,zakres_start,zakres_end):
+        """
+
+        :param typ: "k" lub konto,"m lub magazyn, "p" lub przeglad
+        :param wybor: parametr do magazyn
+        :param zakres_start: parametr do przeglad
+        :param zakres_end: parametr do przeglad
+        :return:
+        """
+        if typ == "k" or typ=="konto":
+            return self.wartoscKonta
+        if typ=="m" or typ=="magazyn":
+            return self.magazyn_rzeczy(wybor)
+
+        if typ == "l" or typ=="lista":
+             return self.lista()
+        if typ == "p" or typ=="przeglad":
+              return self.przeglad(zakres_start,zakres_end)
+        return None
 
 

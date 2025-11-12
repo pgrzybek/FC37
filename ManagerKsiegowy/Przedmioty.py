@@ -12,7 +12,9 @@ class Przedmioty:
         self.cena=cena
     def wypisz(self):
         print(self.nazwa, self.ilosc, self.cena)
-
+        return self.nazwa, self.ilosc, self.cena
+    def __str__(self):
+        return self.nazwa, self.ilosc, self.cena
     def to_dict(self):
         #return self.__dict__
         return {self.nazwa: self.ilosc, self.cena: self.cena}

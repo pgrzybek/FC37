@@ -29,9 +29,10 @@ class Operacje:
 
 def operacje_wykonane(slownik, wartosc):
     if slownik:  # jeśli słownik nie jest pusty
-        nowy_klucz = max(slownik.keys()) + 1
+        keys_as_ints = [int(k) for k in slownik.keys()]
+        nowy_klucz = max(keys_as_ints) + 1
     else:  # jeśli pusty, zaczynamy od 0
-        nowy_klucz = 0
+        nowy_klucz = "0"
     slownik[nowy_klucz] = wartosc
     return slownik
 

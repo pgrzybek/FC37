@@ -1,21 +1,27 @@
 from Operacje import Operacje
 from Przedmioty import Przedmioty
-from SprawdzCzyToLiczba import sprawdz_czy_to_liczba
+import json
+
 
 kontoPLik="konto.json"
 magazynPlik="magazyn.json"
 operacjePlik="operacje.json"
 
-import json
-import pickle
-kontoPLik="konto.json"
+def sprawdz_czy_to_liczba(wartosc):
+    while 1:
+        try:
+            wartosc = int(wartosc)
+            break
+            # this will raise a ValueError
+        except ValueError:
+            print("To nie jest liczba")
+            wartosc = input("Podaj liczbe \n")
+    return wartosc
 
 def zapiszPrzyKoncu(KontoDoZapisu,magazyn,operacja):
 
     with open(kontoPLik,'w') as f:
-        # pickle.dump(KontoDoZapisu,f)
-        # pickle.dump(magazyn,f)
-        # pickle.dump(operacja,f)
+
         json.dump(KontoDoZapisu,f)
 
 
