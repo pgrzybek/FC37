@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<H1>Program Ksiegowy</H1>
+<H1>Historia</H1>
+<a href="{{ url_for('home') }}">Powrót</a>
+{% if not data %} <h1>Zły zakres</h1> {% endif %}
+    {% for key in data %}
+        <p>{{key}}</p>
+        <h2>Operacja: {{ data[key]['operacja'] }}</h2>
+        <ul>
+            <li>Nazwa: {{ data[key]['przedmiot'].nazwa }}</li>
+            <li>Ilość: {{ data[key]['przedmiot'].ilosc }}</li>
+            <li>Cena: {{ data[key]['przedmiot'].cena }}</li>
+        </ul>
+        <hr>
+    {% endfor %}
+</body>
+</html>

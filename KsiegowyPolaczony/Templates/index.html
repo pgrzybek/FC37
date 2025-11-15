@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/style.css">
+    <title>Program Księgowy</title>
+</head>
+<body>
+<H1 id="header">Program Ksiegowy</H1>
+
+<iframe src="{{ url_for('magazynForm') }}"></iframe>
+<br>
+<a href="{{ url_for('history') }}">Historia</a>
+<div id="forms">
+    <div class="formItem">
+        <H4>Zakup</H4><br>
+        <form action="/zakup" method="POST">
+            <label for="buyName">Nazwa: </label>
+            <input id="buyName" type="text"><br>
+            <label for="buyPrice">Cena: </label>
+            <input id="buyPrice" type="number"><br>
+            <label for="buyQuantity">Ilość: </label>
+            <input type="text" name="" id="buyQuantity"><br>
+            <input class="submit" type="submit" value="Zatwierdz">
+        </form>
+    </div>
+    <div class="formItem">
+        <H4>Sprzedarz </H4><br>
+        <form action="/sprzedarz" method="POST">
+            <label for="sellName">Nazwa: </label>
+            <input id="sellName" name="sellName" type="text"><br>
+            <label for="sellPrice">Cena: </label>
+            <input id="sellPrice" name="sellPrice" type="number"><br>
+            <label for="sellQuantity">Ilość :</label>
+            <input type="text" name="sellQuantity" id="sellQuantity"><br>
+            <input class="submit" type="submit" value="Zatwierdz">
+        </form>
+    </div>
+    <div class="formItem">
+        <H4>Konto</H4><br>
+        <form action="/konto" method="POST">
+            <label for="trybWplata">Wplata </label>
+            <input id="trybWplata" name="tryb"  type="radio" value="wplata" checked>
+            <label for="trybWyplata">Wyplata </label>
+            <input type="radio" id="trybWyplata" name="tryb" value="wyplata">
+            <br>
+            <label for="kwota">Podaj kwotę </label>
+            <input id="kwota" name="kwota" type="number"><br>
+            <input class="submit" type="submit" value="Zatwierdz">
+        </form>
+    </div>
+</div>
+</body>
+</html>
