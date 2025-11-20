@@ -1,5 +1,6 @@
 from Magazyn import Magazyn
 from OperacjeNaPliku import  zapiszKonto, zachowajStanMagazynu, zachowajOperacje
+from dbInit import db
 
 
 class Manager(Magazyn):
@@ -16,11 +17,11 @@ class Manager(Magazyn):
         :return:
         """
         if typ == "e" or typ == "koniec":
-            zapiszKonto(self.wartoscKonta)
+            zapiszKonto(self.saldo)
             zachowajStanMagazynu(self.skladMagazynu)
             zachowajOperacje(self.operacje)
         if typ == 'konto' or typ == 'k':
-            self.saldo(wplataLubWyplata, ilosc)
+            self.zmienSaldo(wplataLubWyplata, ilosc)
         if typ == "zakup" or typ == "z":
             self.zakup(nazwa, ilosc, cena)
         if typ == "sprzedarz" or typ == "s":
@@ -36,7 +37,7 @@ class Manager(Magazyn):
         :return:
         """
         if typ == "k" or typ=="konto":
-            return self.wartoscKonta
+            return self.odczytajKonto()
         if typ=="m" or typ=="magazyn":
             return self.magazyn_rzeczy(wybor)
 

@@ -8,16 +8,17 @@
 <H1>Program Ksiegowy</H1>
 <H1>Historia</H1>
 <a href="{{ url_for('home') }}">Powrót</a>
-{% if not data %} <h1>Zły zakres</h1> {% endif %}
-    {% for key in data %}
-        <p>{{key}}</p>
-        <h2>Operacja: {{ data[key]['operacja'] }}</h2>
-        <ul>
-            <li>Nazwa: {{ data[key]['przedmiot'].nazwa }}</li>
-            <li>Ilość: {{ data[key]['przedmiot'].ilosc }}</li>
-            <li>Cena: {{ data[key]['przedmiot'].cena }}</li>
-        </ul>
-        <hr>
+
+<ul>
+    {% for op in operacje %}
+        <li>
+            <strong>Typ operacji:</strong> {{ op.typ }} <br>
+            <strong>Produkt:</strong> {{ op.produkt.nazwa }} <br>
+            Cena: {{ op.produkt.cena }} zł <br>
+            Ilość: {{ op.produkt.ilosc }}
+        </li>
+        <br>
     {% endfor %}
+</ul>
 </body>
 </html>

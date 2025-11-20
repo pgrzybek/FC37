@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cars</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+<link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+<link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+</head>
+<body>
+
+<h1>"Baza danych" samochodów</h1>
+
+<!--Tylko do testów czy projekt działa-->
+<!--{{ car_list }}-->
+
+<table class="table table-stripped">
+    <tr class="active">
+        <th>Marka</th>
+        <th>Model</th>
+        <th>Rok produkcji</th>
+    </tr>
+    {% for car in car_list %}
+    <tr>
+        <td>{{ car.mark }}</td>
+        <td>{{ car.model }}</td>
+        <td>{{ car.year }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<h1>Dodaj nowy pojazd</h1>
+
+<div class="form-group">
+<form action="/myform" method="POST">
+    <label class="form-label" for="form_mark">Marka</label>
+    <input class="form-input" type="text" id="form_mark" name="form_mark"><br>
+
+    <label class="form-label" for="form_model">Model</label>
+    <input class="form-input" type="text" id="form_model" name="form_model"><br>
+
+    <label class="form-label" for="form_year">Rok</label>
+    <input class="form-input" type="text" id="form_year" name="form_year"><br>
+
+    <input type="submit" value="Wyślij">
+</form>
+</div>
+
+<br><br>
+
+<h1>Liczba pojazdów w bazie danych: {{size}}</h1>
+
+</body>
+</html>

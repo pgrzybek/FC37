@@ -18,11 +18,11 @@
         <H4>Zakup</H4><br>
         <form action="/zakup" method="POST">
             <label for="buyName">Nazwa: </label>
-            <input id="buyName" type="text"><br>
+            <input id="buyName" name="nazwa" type="text"><br>
             <label for="buyPrice">Cena: </label>
-            <input id="buyPrice" type="number"><br>
+            <input id="buyPrice"  name="cena" type="number"><br>
             <label for="buyQuantity">Ilość: </label>
-            <input type="text" name="" id="buyQuantity"><br>
+            <input type="text" name="ilosc" id="buyQuantity"><br>
             <input class="submit" type="submit" value="Zatwierdz">
         </form>
     </div>
@@ -30,11 +30,10 @@
         <H4>Sprzedarz </H4><br>
         <form action="/sprzedarz" method="POST">
             <label for="sellName">Nazwa: </label>
-            <input id="sellName" name="sellName" type="text"><br>
-            <label for="sellPrice">Cena: </label>
-            <input id="sellPrice" name="sellPrice" type="number"><br>
+            <input id="sellName" name="nazwa" type="text"><br>
+
             <label for="sellQuantity">Ilość :</label>
-            <input type="text" name="sellQuantity" id="sellQuantity"><br>
+            <input type="text" name="ilosc" id="sellQuantity"><br>
             <input class="submit" type="submit" value="Zatwierdz">
         </form>
     </div>
