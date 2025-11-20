@@ -1,9 +1,9 @@
 #from Operacje import Operacje
 #from itertools import product
 
-from OperacjeNaPliku import  odczytajMagazyn, odczytajOperacje
+
 from KontoEncja import KontoEncja
-#from Przedmioty import Przedmioty
+
 from dbInit import db
 from Produkt import Produkt
 from OperacjeEncja import Operacje
@@ -12,8 +12,7 @@ from OperacjeEncja import Operacje
 class Magazyn:
     def __init__(self):
         self.saldo = self.odczytajKonto().saldo
-        self.skladMagazynu = odczytajMagazyn()
-        self.operacje = odczytajOperacje()
+
 
     @staticmethod
     def odczytajKonto():

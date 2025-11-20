@@ -1,5 +1,5 @@
 from dbInit import db
-from przedmiot import Przedmiot
+
 
 
 class Operacje(db.Model):
