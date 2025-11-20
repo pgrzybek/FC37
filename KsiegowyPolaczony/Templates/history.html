@@ -13,9 +13,9 @@
     {% for op in operacje %}
         <li>
             <strong>Typ operacji:</strong> {{ op.typ }} <br>
-            <strong>Produkt:</strong> {{ op.produkt.nazwa }} <br>
-            Cena: {{ op.produkt.cena }} zł <br>
-            Ilość: {{ op.produkt.ilosc }}
+            <strong>Produkt:</strong> {{ op.nazwa }} <br>
+            Cena: {{ op.cena }} zł <br>
+            Ilość: {{ op.ilosc }}
         </li>
         <br>
     {% endfor %}

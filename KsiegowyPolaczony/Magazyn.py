@@ -112,13 +112,15 @@ class Magazyn:
         if zakupiono >= 0:
             if not produkt:
                 produkt = Produkt(nazwa=nazwa, cena=cena, ilosc=ilosc)
+                konto.saldo = zakupiono
                 db.session.add(produkt)
                 db.session.commit()
             else:
                 produkt.ilosc=produkt.ilosc + ilosc
+                konto.saldo = zakupiono
             przedmiot=produkt
             db.session.add(przedmiot)
-            operacja=Operacje(typ="kupno",produkt=produkt)
+            operacja=Operacje(typ="kupno",nazwa=nazwa, cena=cena, ilosc=ilosc)
             db.session.add(operacja)
             db.session.commit()
             return produkt
@@ -141,14 +143,16 @@ class Magazyn:
                 produkt.ilosc = produkt.ilosc -ilosc
                 saldo = saldo + produkt.ilosc * produkt.cena
                 konto.saldo = saldo
-                operacja = Operacje(typ="sprzedarz",produkt=produkt)
+                operacja = Operacje(typ="sprzedarz",nazwa=produkt.nazwa,cena=produkt.cena,ilosc=ilosc)
                 db.session.add(operacja)
                 db.session.commit()
             elif ilosc == produkt.ilosc :
 
                 saldo = saldo + produkt.ilosc * produkt.cena
                 konto.saldo = saldo
-
+                #produkt.ilosc=0
+                operacja = Operacje(typ="sprzedarz", nazwa=produkt.nazwa, cena=produkt.cena, ilosc=ilosc)
+                db.session.add(operacja)
                 db.session.delete(produkt)
                 db.session.commit()
             return produkt

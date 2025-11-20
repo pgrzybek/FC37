@@ -15,8 +15,8 @@ class Operacje(db.Model):
 
     # przedmiot_id = db.Column(db.Integer, db.ForeignKey("przedmiot.id"),nullable=False)
     # przedmiot=db.relationship("Przedmiot",back_populates="operacje")
-    produkt_id = db.Column(db.Integer, db.ForeignKey("produkt.id"), nullable=True)
-    produkt = db.relationship("Produkt", back_populates="operacje")
+    #produkt_id = db.Column(db.Integer, db.ForeignKey("produkt.id"), nullable=True)
+    #produkt = db.relationship("Produkt", back_populates="operacje")
     #
     # def __repr__(self):
     #     return f"<Operacja id={self.id} typ={self.typ} Produkt={self.produkt.nazwa}>"
